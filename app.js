@@ -32,8 +32,10 @@ app.use(passport.session());
 /////////////////////////////////////////////////////////////
 // CONFIGURE MONGODB CONNECTION WITH MONGOOSE
 /////////////////////////////////////////////////////////////
-mongodb+srv://admin-bart:<password>@cluster0.ljolo.mongodb.net/<dbname>?retryWrites=true&w=majority
-mongoose.connect('mongodb+srv://'+ATLAS_ADMIN_USERNAME +':'+ ATLAS_ADMIN_PASSWORD+'@cluster0.ljolo.mongodb.net/userDB', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+
+mongoose.connect('mongodb+srv://'+process.env.ATLAS_ADMIN_USERNAME +':'+ process.env.ATLAS_ADMIN_PASSWORD+'@cluster0.ljolo.mongodb.net/userDB',
+{useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}
+);
 
 
 /////////////////////////////////////////////////////////////
