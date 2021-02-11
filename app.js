@@ -195,6 +195,7 @@ app.get("/register", function(req, res){
 // REGISTER ROUTE POST REQUEST
 /////////////////////////////////////////////////////////////
 app.post("/register", function(req, res){
+
   User.register({username: req.body.username}, req.body.password, function(err, user){
     if (err){
       console.log(err);
@@ -220,8 +221,6 @@ app.get("/secrets", function(req, res){
       secretsFound.sort(function(a,b){
         return a.timestamp-b.timestamp
       });
-      console.log("Logging the Ordered secrets list before rendering view");
-      console.log(secretsFound);
       res.render("secrets", {secretsListOrdered: secretsFound, isAuthenticated: req.isAuthenticated()});
     }
   });
