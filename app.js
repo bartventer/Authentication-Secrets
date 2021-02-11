@@ -35,20 +35,48 @@ app.use(passport.session());
 // CONFIGURE MONGODB CONNECTION WITH MONGOOSE
 /////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////
+// LOCAL DEVELOPMENT: CONNECTION TO MONGODB DATABASE
+/////////////////////////////////////////////////////////////
+// mongoose.connect('mongodb://localhost:27017/userDB',
+// {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}
+// );
+
+/////////////////////////////////////////////////////////////
+// PRODUCTION: CONNECTION TO MONGO ATLAS CLUSTER
+/////////////////////////////////////////////////////////////
 mongoose.connect('mongodb+srv://'+process.env.ATLAS_ADMIN_USERNAME +':'+ process.env.ATLAS_ADMIN_PASSWORD+'@cluster0.ljolo.mongodb.net/userDB',
 {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}
 );
 
-
 /////////////////////////////////////////////////////////////
 // MONGOOSE SCHEMA AND MODEL CREATION
 /////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////
+// SECRET SCHEMA
+/////////////////////////////////////////////////////////////
+const secretSchema = new mongoose.Schema({
+  user_id: Number.
+  secret: String,
+  timestamp : {type: Number, default: Date.now}
+});
+
+
+/////////////////////////////////////////////////////////////
+// SECRET COLLECTION/MODEL
+/////////////////////////////////////////////////////////////
+const Secret = mongoose.model('Secret', secretSchema);
+
+
+/////////////////////////////////////////////////////////////
 // USER SCHEMA
+/////////////////////////////////////////////////////////////
 const userSchema = new mongoose.Schema({
   email: String,
   password: String,
   googleId: String,
-  secrets: []
+  secrets: [secretSchema]
 });
 
 
@@ -186,16 +214,19 @@ app.post("/register", function(req, res){
 // SECRETS ROUTE GET REQUEST
 /////////////////////////////////////////////////////////////
 app.get("/secrets", function(req, res){
-  User.find( {secrets: {$ne:[]}} ,
-    function(err, foundUsers){
-      if (err){
-        console.log(err);
-      } else {
-        if (foundUsers){
-          res.render("secrets", {userWithSecrets: foundUsers, isAuthenticated: req.isAuthenticated()});
-        }
-      }
-    });
+  Secret.find(function(err, secretsFound){
+    if (err){
+      console.log(err);
+    } else {
+      secretsFound.sort(function(a,b){
+        return a.timestamp-b.timestamp
+      });
+      console.log("Logging the Ordered secrets list before rendering view");
+      console.log(secretsFound);
+      res.render("secrets", {secretsListOrdered: secretsFound, isAuthenticated: req.isAuthenticated()});
+    }
+  });
+
 });
 
 
@@ -216,14 +247,24 @@ app.get("/submit", function(req, res){
 /////////////////////////////////////////////////////////////
 app.post("/submit", function(req, res){
   const submittedSecret = req.body.secret;
-  console.log(req.user.id);
-  User.updateOne({_id:req.user.id}, {$push: {secrets: submittedSecret}}, function(err){
-    if (err){
+  const newSecret = new Secret({
+    secret: submittedSecret
+  });
+  newSecret.save(function(err){
+    if(err){
       console.log(err);
     } else {
+
+      console.log(req.user.id);
+      User.updateOne({_id:req.user.id}, {$push: {secrets: newSecret}}, function(err){
+        if (err){
+          console.log(err);
+        }
+      });
       res.redirect("/secrets");
     }
   });
+
 });
 
 
