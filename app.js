@@ -57,7 +57,6 @@ mongoose.connect('mongodb+srv://'+process.env.ATLAS_ADMIN_USERNAME +':'+ process
 // SECRET SCHEMA
 /////////////////////////////////////////////////////////////
 const secretSchema = new mongoose.Schema({
-  user_id: Number.
   secret: String,
   timestamp : {type: Number, default: Date.now}
 });
