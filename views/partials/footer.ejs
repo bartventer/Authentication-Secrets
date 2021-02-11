@@ -1,4 +1,52 @@
-
-
 </body>
+
+<footer>
+  <div>
+    <span class="copyrightInfo">© Bart Venter </span>
+  </div>
+
+  <div class="footerLinksBox">
+    <ul class="footerLinksList">
+      <li>
+        <a href="https://www.linkedin.com/in/bart-venter-ca-sa-606bb0141/">
+          <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="icon fab fa-linkedin fa-stack-1x fa-inverse"></i>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a href="https://www.facebook.com/bart.venter.12">
+          <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="icon fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/bartventer?tab=repositories">
+          <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="icon fab fa-github fa-stack-1x fa-inverse"></i>
+          </span>
+        </a>
+      </li>
+    </ul>
+
+  </div>
+
+  <div>
+    <p id="credits"><span>Photo by <a href="https://unsplash.com/@woods?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Joe Woods</a> on <a
+          href="https://unsplash.com/s/photos/wall?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
+  </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+  // Updating footer date
+  const footerDate = new Date().getFullYear();
+  $(".copyrightInfo").append(footerDate);
+</script>
+
 </html>
