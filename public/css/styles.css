@@ -7,6 +7,7 @@ html {
 
 body{
   background-color: rgb(0 0 0 / 0%);
+  height: 100%;
 }
 
 .jumbotron{
@@ -34,7 +35,7 @@ footer {
   list-style-type: none;
   display: inline-flex;
   padding-left: 0px;
-  margin-bottom: 0px;
+  margin-bottom: 1rem;
 }
 
 .fas{
@@ -56,10 +57,8 @@ a{
   line-height: 1.5;
 }
 
-#credits a:link {
-  color: white;
-  background-color: transparent;
-  text-decoration: none;
+.credits {
+  font-size: 10px;
 }
 
 .jumbotron {
